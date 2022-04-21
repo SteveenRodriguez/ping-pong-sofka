@@ -50,12 +50,26 @@
     };
 
     self.BoardView.prototype = {
+        clean: function () {
+            this.context.clearRect(0, 0, this.board.width, this.board.height);
+        },
         draw: function () {
-            for (var i = this.board.elements.lengt; i >= 0; i--) {
+            for (var i = this.board.elements.length - 1; i >= 0; i--) {
                 var el = this.board.elements[i];
-                draw(this.ctx, el);
-            }
-        }
+
+                draw(this.context, el);
+            };
+        },
+
+        check_collitions: function () {
+            for (var i = this.board.bars.length - 1; i >= 0; i--) {
+                var bar = this.board.bars[i];
+                if (hit(bar, this.board.ball)) {
+                    this.board.ball.collition(bar);
+                }
+
+            };
+        },
     };
 
     function draw(ctx, element) {
@@ -74,7 +88,7 @@
 document.addEventListener("keydown", function (ev) {
     if (ev.keyCode == 38) {
         bar.up();
-    } else if()
+    } else if ()
 });
 
 self.window.addEventListener("load", main);
